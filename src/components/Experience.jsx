@@ -1,6 +1,6 @@
 import { OrbitControls } from "@react-three/drei";
 import { Welcome } from "./Welcome";
-import { useControls } from "leva";
+import { useControls, Leva } from "leva"; // Import Leva
 import { useState, useEffect } from "react";
 import { useSpring, animated } from "@react-spring/three";
 import Overlay from "./Overlay";
@@ -56,6 +56,9 @@ export const Experience = () => {
 
     return (
         <>
+            {/* Leva UI - hidden by default */}
+            <Leva hidden={true} />
+
             {/* Lighting */}
             <ambientLight intensity={lightIntensity.ambient} />
             <directionalLight position={[mouseLightX, lightY, lightZ]} intensity={lightIntensity.directional} />
@@ -69,8 +72,7 @@ export const Experience = () => {
             </animated.group>
 
             {/* Overlay for HTML */}
-            <Overlay />
+            <Overlay onTransformClick={handleTransformClick} />
         </>
     );
-
 };

@@ -14,26 +14,7 @@ export function Welcome({ onTransformClick }) {
                     <mesh geometry={nodes.parts_L2_0.geometry} material={materials.material} />
                     <mesh geometry={nodes.parts_L1_0.geometry} material={materials.material_2} />
                 </group>
-            </group>
-
-            {/* Button as an Html overlay inside the 3D scene */}
-            <Html className='font-bruno'>
-                <div>
-                    <div className='bg-white'>
-                        <button onClick={onTransformClick}>
-                            Transform Helmet
-                        </button>
-                    </div>
-                    <div className='bg-pink-100'>
-                        <button onClick={onTransformClick}>
-                            Transform Helmet
-                        </button>
-
-                    </div>
-                </div>
-            </Html>
-
-        </group>
+            </group>        </group>
     );
 }
 
