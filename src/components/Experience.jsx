@@ -27,7 +27,7 @@ export const Experience = () => {
         rotX: animate ? -1.4 : 0,
         rotY: animate ? 3.14 : 0,
         scale: animate ? 3.9 : 0.7,
-        config: { duration: 1000 },
+        config: { duration: 1500 },
         onRest: () => {
             if (animate) {
                 setLightIntensity({ ambient: 0, directional: 0 });
