@@ -1,6 +1,7 @@
 import { Html } from '@react-three/drei';
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
+import github from '../assets/icons/github.png';
 
 // Define keyframe animations
 const textRotate1 = keyframes`
@@ -73,32 +74,34 @@ const AnimatedTextContainer = styled.div`
 
 // Helper function to wrap each letter in a span
 const produceSpans = (text) =>
-    text.split("").map((letter, index) => (
-        <span key={index} style={{ display: 'inline-block' }}>
-            {letter}
-        </span>
-    ));
+  text.split("").map((letter, index) => (
+    <span key={index} style={{ display: 'inline-block' }}>
+      {letter}
+    </span>
+  ));
 
 // Overlay component
 const Overlay = ({ onTransformClick }) => {
-    return (
-        <Html fullscreen>
-            <OverlayContainer className="font-bruno">
-                <AnimatedTextContainer>
-                    <div className="text first w-screen" aria-label="Manpreet Singh">
-                        {produceSpans("Iam-Mann")}
-                    </div>
-                    <div className="text second  w-screen" aria-label="Full Stack Developer">
-                        {produceSpans("Full Stack Developer")}
-                    </div>
-                </AnimatedTextContainer>
+  return (
+    <Html fullscreen>
+      <OverlayContainer className="font-bruno">
+        <AnimatedTextContainer>
+          <div className="text first w-screen" aria-label="Manpreet Singh">
+            {produceSpans("IamMannPreet")}
+          </div>
+          <div className="text second  w-screen" aria-label="Full Stack Developer">
+            {produceSpans("Full Stack Developer")}
+          </div>
+        </AnimatedTextContainer>
 
-                <StyledButton onClick={onTransformClick}>
-                    Know me Better
-                </StyledButton>
-            </OverlayContainer>
-        </Html>
-    );
+        <StyledButton onClick={onTransformClick}>
+          Know me Better
+        </StyledButton>
+        <img className='w-12 flex justify-start' src={github} alt="GitHub" />
+
+      </OverlayContainer>
+    </Html>
+  );
 };
 
 export default Overlay;

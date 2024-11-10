@@ -1,6 +1,6 @@
 import { OrbitControls } from "@react-three/drei";
 import { Welcome } from "./Welcome";
-import { useControls, Leva } from "leva"; // Import Leva
+import { useControls, Leva } from "leva";
 import { useState, useEffect } from "react";
 import { useSpring, animated } from "@react-spring/three";
 import Overlay from "./Overlay";
@@ -8,6 +8,7 @@ import Overlay from "./Overlay";
 export const Experience = () => {
     const [lightIntensity, setLightIntensity] = useState({ ambient: 2.7, directional: 3 });
     const [mouseLightX, setMouseLightX] = useState(-9.5);
+    const [responsiveScale, setResponsiveScale] = useState(0.7); // Default to desktop scale
 
     // Light controls for Y and Z positions only, as X will be dynamic
     const { lightY, lightZ } = useControls("Lighting", {
@@ -23,10 +24,11 @@ export const Experience = () => {
 
     const [animate, setAnimate] = useState(false);
 
+    // Update scale based on animation state and responsive scale
     const { rotX, rotY, scale } = useSpring({
         rotX: animate ? -1.4 : 0,
         rotY: animate ? 3.14 : 0,
-        scale: animate ? 3.9 : 0.7,
+        scale: animate ? 3.9 : responsiveScale,
         config: { duration: 1500 },
         onRest: () => {
             if (animate) {
@@ -42,10 +44,24 @@ export const Experience = () => {
         }
     };
 
+    // Responsive scale effect
+    useEffect(() => {
+        const updateScale = () => {
+            if (window.matchMedia("(max-width: 1024px)").matches) {
+                setResponsiveScale(0.5); // Tablet scale
+            } else {
+                setResponsiveScale(0.7); // Desktop scale
+            }
+        };
+
+        updateScale(); // Set scale initially
+        window.addEventListener("resize", updateScale); // Update scale on resize
+        return () => window.removeEventListener("resize", updateScale);
+    }, []);
+
     // Track mouse movement to update lightX position
     useEffect(() => {
         const handleMouseMove = (event) => {
-            // Map mouse position to a lightX value in the range of -10 to 10
             const lightX = (event.clientX / window.innerWidth) * 20 - 10;
             setMouseLightX(lightX);
         };
@@ -56,22 +72,17 @@ export const Experience = () => {
 
     return (
         <>
-            {/* Leva UI - hidden by default */}
             <Leva hidden={true} />
 
-            {/* Lighting */}
             <ambientLight intensity={lightIntensity.ambient} />
             <directionalLight position={[mouseLightX, lightY, lightZ]} intensity={lightIntensity.directional} />
 
-            {/* Camera Controls */}
             <OrbitControls enableZoom={false} />
 
-            {/* 3D Model Animation Group */}
             <animated.group position={[posX, posY, posZ]} rotation-x={rotX} rotation-y={rotY} scale={scale}>
                 <Welcome onTransformClick={handleTransformClick} />
             </animated.group>
 
-            {/* Overlay for HTML */}
             <Overlay onTransformClick={handleTransformClick} />
         </>
     );

@@ -6,11 +6,11 @@ import { Experience } from './components/Experience'
 
 function App() {
   return (
-
-    <Canvas>
-      <Experience />
-    </Canvas>
-
+    <div>
+      <Canvas>
+        <Experience></Experience>
+      </Canvas>
+    </div>
 
   )
 }
