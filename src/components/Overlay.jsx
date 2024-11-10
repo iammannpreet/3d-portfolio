@@ -1,8 +1,8 @@
 import { Html } from '@react-three/drei';
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
-import github from '../assets/icons/github.png';
-
+import github from '../assets/icons/github.svg';
+import '../index.css'
 // Define keyframe animations
 const textRotate1 = keyframes`
   0% { transform: translate3d(0, 0%, 0) rotateX(0deg); }
@@ -18,51 +18,14 @@ const textRotate2 = keyframes`
   100% { transform: translate3d(0, 0%, 0) rotateX(0deg); }
 `;
 
-// Styled components
-const OverlayContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 3rem;
-  height: 100vh;
-  padding: 2rem;
-`;
-
-const StyledButton = styled.button`
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-  cursor: pointer;
-  border-radius: 5px;
-  background-color: #333;
-  color: #fff;
-  border: none;
-  margin-top: 2rem;
-  transition: background-color 0.3s ease;
-
-  &:hover {
-    background-color: black;
-  }
-`;
-
 const AnimatedTextContainer = styled.div`
-  position: relative;
-  font-size: 2rem;
-  font-weight: bold;
-  color: #333;
-  text-align: center;
   .text {
     span {
-      display: inline-block;
       will-change: transform;
       transform-style: preserve-3d;
-      transform-origin: bottom;
       animation: ${textRotate1} 2.4s infinite alternate;
     }
     &.second {
-      color: #555; /* Adjust the color for the second text */
-      position: absolute;
-      top: 0;
-      left: 0;
       span {
         transform-origin: bottom;
         transform: translate3d(0, 100%, 0) rotateX(-90deg);
@@ -72,7 +35,6 @@ const AnimatedTextContainer = styled.div`
   }
 `;
 
-// Helper function to wrap each letter in a span
 const produceSpans = (text) =>
   text.split("").map((letter, index) => (
     <span key={index} style={{ display: 'inline-block' }}>
@@ -80,26 +42,27 @@ const produceSpans = (text) =>
     </span>
   ));
 
-// Overlay component
 const Overlay = ({ onTransformClick }) => {
   return (
     <Html fullscreen>
-      <OverlayContainer className="font-bruno">
-        <AnimatedTextContainer>
-          <div className="text first w-screen" aria-label="Manpreet Singh">
+      <div className="font-bruno h-screen">
+
+        <AnimatedTextContainer className='mt-4 relative font-bold text-gray-800 text-center'>
+          <span className="text first w-screen text-2xl md:text-4xl inline-block origin-bottom text-gray-700" aria-label="Manpreet Singh">
             {produceSpans("IamMannPreet")}
-          </div>
-          <div className="text second  w-screen" aria-label="Full Stack Developer">
+          </span>
+          <span className="text second  w-screen text-2xl md:text-4xl text-gray-900 absolute top-0 left-0" aria-label="Full Stack Developer">
             {produceSpans("Full Stack Developer")}
-          </div>
+          </span>
         </AnimatedTextContainer>
 
-        <StyledButton onClick={onTransformClick}>
+        <button className='px-4 py-2 text-base cursor-pointer rounded bg-gray-700 text-white border-none mt-8 transition-colors duration-300 ease-in-out hover:bg-black' onClick={onTransformClick}>
           Know me Better
-        </StyledButton>
-        <img className='w-12 flex justify-start' src={github} alt="GitHub" />
+        </button>
 
-      </OverlayContainer>
+        <img className='w-12 bg-transparent drop-shadow-glow' src={github} alt="GitHub" />
+
+      </div>
     </Html>
   );
 };

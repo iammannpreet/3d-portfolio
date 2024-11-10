@@ -9,3 +9,9 @@ html {
   margin: 0;
   padding: 0;
 }
+.drop-shadow-glow {
+  filter: drop-shadow(0 0 6px rgba(2, 21, 41, 0.6));
+}
+.drop-shadow-glow:hover {
+  filter: drop-shadow(0 0 6px rgba(254, 94, 14, 0.6));
+}

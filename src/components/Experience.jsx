@@ -8,7 +8,7 @@ import Overlay from "./Overlay";
 export const Experience = () => {
     const [lightIntensity, setLightIntensity] = useState({ ambient: 2.7, directional: 3 });
     const [mouseLightX, setMouseLightX] = useState(-9.5);
-    const [responsiveScale, setResponsiveScale] = useState(0.7); // Default to desktop scale
+    const [responsiveScale, setResponsiveScale] = useState(0.6); // Default to desktop scale
 
     // Light controls for Y and Z positions only, as X will be dynamic
     const { lightY, lightZ } = useControls("Lighting", {
