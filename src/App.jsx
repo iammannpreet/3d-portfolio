@@ -1,16 +1,18 @@
 import React from 'react'
-import { useState } from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css'
-import { Canvas } from '@react-three/fiber'
-import { Experience } from './components/Experience'
+import Welcome from './pages/Welcome'
+import Portfolio from './pages/Portfolio';
+
 
 function App() {
   return (
-    <div>
-      <Canvas>
-        <Experience></Experience>
-      </Canvas>
-    </div>
+<Router>
+  <Routes>
+  <Route path="/" element={<Welcome />} />
+  <Route path="/portfolio" element={<Portfolio />} />
+      </Routes>
+      </Router>
 
   )
 }

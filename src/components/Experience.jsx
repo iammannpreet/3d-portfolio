@@ -4,8 +4,10 @@ import { useControls, Leva } from "leva";
 import { useState, useEffect } from "react";
 import { useSpring, animated } from "@react-spring/three";
 import Overlay from "./Overlay";
+import { useNavigate } from "react-router-dom";
 
 export const Experience = () => {
+    const navigate = useNavigate();
     const [lightIntensity, setLightIntensity] = useState({ ambient: 2.7, directional: 3 });
     const [mouseLightX, setMouseLightX] = useState(-9.5);
     const [responsiveScale, setResponsiveScale] = useState(0.6); // Default to desktop scale
@@ -33,6 +35,7 @@ export const Experience = () => {
         onRest: () => {
             if (animate) {
                 setLightIntensity({ ambient: 0, directional: 0 });
+                navigate('/portfolio');
             }
         },
     });
