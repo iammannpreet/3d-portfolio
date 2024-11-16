@@ -1,11 +1,11 @@
 import React from 'react'
 import { Canvas } from '@react-three/fiber'
-import { Experience } from '../components/Experience'
+import { HelmetCanvas } from '../components/HelmetCanvas'
 function Welcome() {
   return (
     <div>
       <Canvas>
-        <Experience></Experience>
+        <HelmetCanvas />
       </Canvas>
     </div>
   )

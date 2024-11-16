@@ -1,12 +1,12 @@
 import { OrbitControls } from "@react-three/drei";
-import { Welcome } from "./Welcome";
+import { Helmet } from "./Helmet";
 import { useControls, Leva } from "leva";
 import { useState, useEffect } from "react";
 import { useSpring, animated } from "@react-spring/three";
 import Overlay from "./Overlay";
 import { useNavigate } from "react-router-dom";
 
-export const Experience = () => {
+export const HelmetCanvas = () => {
     const navigate = useNavigate();
     const [lightIntensity, setLightIntensity] = useState({ ambient: 2.7, directional: 3 });
     const [mouseLightX, setMouseLightX] = useState(-9.5);
@@ -83,7 +83,7 @@ export const Experience = () => {
             <OrbitControls enableZoom={false} />
 
             <animated.group position={[posX, posY, posZ]} rotation-x={rotX} rotation-y={rotY} scale={scale}>
-                <Welcome onTransformClick={handleTransformClick} />
+                <Helmet onTransformClick={handleTransformClick} />
             </animated.group>
 
             <Overlay onTransformClick={handleTransformClick} />

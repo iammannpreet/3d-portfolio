@@ -1,9 +1,9 @@
 import React from 'react'
-
+import BikeCanvas from '../components/Bike'
 function Portfolio() {
   return (
     <div>
-      <h1>Portfolio</h1>
+        <BikeCanvas />
     </div>
   )
 }

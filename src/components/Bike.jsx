@@ -1,14 +1,18 @@
-import { useAnimations, useGLTF } from "@react-three/drei";
+import { useAnimations, useGLTF, OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Suspense, useEffect, useRef, useState } from "react";
-import bikeScene from "../assets/3d/bike.glb";
+import bikeScene from "../../public/models/bike.glb";
 
 
 const Bike = ({ scale, position, rotation }) => {
     const bikeRef = useRef();
     const { scene, animations } = useGLTF(bikeScene);
     const { actions } = useAnimations(animations, bikeRef);
-
+    const [background, setBackground] = useState({
+        color: "#000000",
+        gradient: "linear-gradient(10deg, #020224 -10%, #ffffff 50%, #7a7b81 100%)",
+      });
+      
     useEffect(() => {
         scene.traverse((child) => {
             if (child.isMesh && child.material) {
@@ -28,57 +32,22 @@ const Bike = ({ scale, position, rotation }) => {
 };
 
 const BikeCanvas = () => {
-    const [rotation, setRotation] = useState([-3.1, 5.35, 3.1]); // Initial rotation
-    const [scale, setScale] = useState([1, 1, 1]); // Reduced initial scale
+    const [rotation, setRotation] = useState([-3.1, 5.35, 3.1]);
+    const [scale, setScale] = useState([1, 1, 1]);
     const [position, setPosition] = useState([0.2, -0.7, 0]);
-    useEffect(() => {
-        const startRotation = [-3.1, 5, 3.2];
-        const endRotation = [-3.08, 5, 3.18];
-        let direction = 1;
-        let interval;
 
-        const animateRotation = () => {
-            interval = setInterval(() => {
-                setRotation((prevRotation) => {
-                    const progress = 0.015 * direction; // Adjust this speed value to control the pace
-                    const newRotation = [
-                        prevRotation[0] + (endRotation[0] - startRotation[0]) * progress,
-                        prevRotation[1] + (endRotation[1] - startRotation[1]) * progress,
-                        prevRotation[2] + (endRotation[2] - startRotation[2]) * progress,
-                    ];
-
-                    // Check if we've reached the end rotation and reverse direction
-                    if (direction === 1 && newRotation[0] >= endRotation[0]) {
-                        direction = -1;
-                    } else if (direction === -1 && newRotation[0] <= startRotation[0]) {
-                        direction = 1;
-                    }
-
-                    return newRotation;
-                });
-            }, 10); // Update rotation every 10ms
-        };
-
-        animateRotation();
-
-        return () => clearInterval(interval);
-    }, []);
     useEffect(() => {
         const handleScroll = () => {
             const scrollTop = window.scrollY;
 
-            // Define start and end rotations
             const startRotation = [-3.1, 5.35, 3.1];
             const endRotation = [-3.1, 3, 3.1];
 
-            // Define scroll range for the rotation change
             const startY = 0;
             const endY = 500;
 
-            // Calculate progress based on scroll position
             const progress = Math.min(Math.max((scrollTop - startY) / (endY - startY), 0), 1);
 
-            // Interpolate rotation values based on progress
             const newRotation = [
                 startRotation[0] + (endRotation[0] - startRotation[0]) * progress,
                 startRotation[1] + (endRotation[1] - startRotation[1]) * progress,
@@ -90,7 +59,7 @@ const BikeCanvas = () => {
 
         const handleResize = () => {
             if (window.innerWidth < 768) {
-                setScale([3, 3, 3]);
+                setScale([1, 1, 1]);
                 setPosition([0, 0, 0]);
             } else if (window.innerWidth < 1024) {
                 setScale([0.555, 0.555, 0.555]);
@@ -129,6 +98,7 @@ const BikeCanvas = () => {
                 <spotLight position={[0, 5, 10]} angle={0.3} penumbra={0.5} intensity={5} />
                 <hemisphereLight skyColor="#ffffff" groundColor="#444444" intensity={3.8} />
                 <Bike rotation={rotation} scale={scale} position={position} />
+                <OrbitControls enableZoom={true} enablePan={true} enableRotate={true} />
             </Suspense>
         </Canvas>
     );
