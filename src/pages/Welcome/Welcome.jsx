@@ -1,12 +1,13 @@
 import React from 'react'
 import { Canvas } from '@react-three/fiber'
-import { HelmetCanvas } from '../components/HelmetCanvas'
+import { HelmetCanvas } from './HelmetCanvas'
 function Welcome() {
   return (
     <div>
-      <Canvas>
-        <HelmetCanvas />
+        <Canvas>
+        <HelmetCanvas></HelmetCanvas>
       </Canvas>
+      
     </div>
   )
 }

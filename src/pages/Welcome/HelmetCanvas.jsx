@@ -3,7 +3,7 @@ import { Helmet } from "./Helmet";
 import { useControls, Leva } from "leva";
 import { useState, useEffect } from "react";
 import { useSpring, animated } from "@react-spring/three";
-import Overlay from "./Overlay";
+import Overlay from "../../components/Overlay";
 import { useNavigate } from "react-router-dom";
 
 export const HelmetCanvas = () => {

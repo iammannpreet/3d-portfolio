@@ -4,6 +4,7 @@ import styled, { keyframes } from 'styled-components';
 import github from '../assets/icons/github.svg';
 import KnowMeButton from './KnowMeButton';
 import '../index.css'
+import AnimatedText from '../pages/Welcome/AnimatedText';
 
 // Define keyframe animations
 const textRotate1 = keyframes`
@@ -97,7 +98,7 @@ const Overlay = ({ onTransformClick }) => {
   return (
     <Html fullscreen style={{ pointerEvents: 'none' }}>
       <div className="font-bruno h-screen flex flex-col items-center" style={{ pointerEvents: 'none' }}>
-    
+    <AnimatedText></AnimatedText>
         <AnimatedTextContainer className="mt-4 relative font-bold text-gray-800 text-center">
           <span
             className="text first w-screen text-2xl md:text-4xl inline-block origin-bottom text-gray-700"
