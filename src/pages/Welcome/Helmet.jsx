@@ -1,14 +1,13 @@
 import React, { useRef } from "react";
-import { useGLTF } from "@react-three/drei"; // Import useGLTF and OrbitControls
+import { useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber"; // Import useFrame for animations
 
 export function Helmet() {
   const { nodes, materials } = useGLTF('./models/helmet.glb'); // Load the GLTF model
   const ref = useRef();
 
-  // Rotate the helmet
   useFrame(() => {
-    if (ref.current) ref.current.rotation.y += 0.002;
+    if (ref.current) ref.current.rotation.y -= 0.0025;
   });
 
   return (
@@ -22,4 +21,4 @@ export function Helmet() {
   );
 }
 
-useGLTF.preload('./models/helmet.glb'); // Preload the GLTF model
+useGLTF.preload('./models/helmet.glb');

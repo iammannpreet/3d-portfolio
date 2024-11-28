@@ -1,10 +1,10 @@
-import { OrbitControls } from "@react-three/drei";
+
 import { Helmet } from "./Helmet";
 import { useControls, Leva } from "leva";
 import { useState, useEffect } from "react";
 import { useSpring, animated } from "@react-spring/three";
-import Overlay from "../../components/Overlay";
 import { useNavigate } from "react-router-dom";
+import Overlay from "../../components/Overlay";
 
 export const HelmetCanvas = () => {
     const navigate = useNavigate();
@@ -25,7 +25,6 @@ export const HelmetCanvas = () => {
     });
 
     const [animate, setAnimate] = useState(false);
-
     // Update scale based on animation state and responsive scale
     const { rotX, rotY, scale } = useSpring({
         rotX: animate ? -1.4 : 0,
@@ -76,16 +75,12 @@ export const HelmetCanvas = () => {
     return (
         <>
             <Leva hidden={true} />
-
             <ambientLight intensity={lightIntensity.ambient} />
             <directionalLight position={[mouseLightX, lightY, lightZ]} intensity={lightIntensity.directional} />
-
-            <OrbitControls enableZoom={false} />
 
             <animated.group position={[posX, posY, posZ]} rotation-x={rotX} rotation-y={rotY} scale={scale}>
                 <Helmet onTransformClick={handleTransformClick} />
             </animated.group>
-
             <Overlay onTransformClick={handleTransformClick} />
         </>
     );
