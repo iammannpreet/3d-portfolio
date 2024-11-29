@@ -1,4 +1,3 @@
-
 import { Helmet } from "./Helmet";
 import { useControls, Leva } from "leva";
 import { useState, useEffect } from "react";
@@ -9,10 +8,9 @@ import Overlay from "../../components/Overlay";
 export const HelmetCanvas = () => {
     const navigate = useNavigate();
     const [lightIntensity, setLightIntensity] = useState({ ambient: 2.7, directional: 3 });
-    const [mouseLightX, setMouseLightX] = useState(-9.5);
     const [responsiveScale, setResponsiveScale] = useState(0.6); // Default to desktop scale
 
-    // Light controls for Y and Z positions only, as X will be dynamic
+    // Light controls for Y and Z positions only
     const { lightY, lightZ } = useControls("Lighting", {
         lightY: { value: 2.5, min: -10, max: 10, step: 0.5 },
         lightZ: { value: 10, min: -10, max: 10, step: 0.5 },
@@ -25,6 +23,7 @@ export const HelmetCanvas = () => {
     });
 
     const [animate, setAnimate] = useState(false);
+
     // Update scale based on animation state and responsive scale
     const { rotX, rotY, scale } = useSpring({
         rotX: animate ? -1.4 : 0,
@@ -34,7 +33,7 @@ export const HelmetCanvas = () => {
         onRest: () => {
             if (animate) {
                 setLightIntensity({ ambient: 0, directional: 0 });
-                navigate('/portfolio');
+                navigate("/portfolio");
             }
         },
     });
@@ -61,22 +60,11 @@ export const HelmetCanvas = () => {
         return () => window.removeEventListener("resize", updateScale);
     }, []);
 
-    // Track mouse movement to update lightX position
-    useEffect(() => {
-        const handleMouseMove = (event) => {
-            const lightX = (event.clientX / window.innerWidth) * 20 - 10;
-            setMouseLightX(lightX);
-        };
-
-        window.addEventListener("mousemove", handleMouseMove);
-        return () => window.removeEventListener("mousemove", handleMouseMove);
-    }, []);
-
     return (
         <>
             <Leva hidden={true} />
             <ambientLight intensity={lightIntensity.ambient} />
-            <directionalLight position={[mouseLightX, lightY, lightZ]} intensity={lightIntensity.directional} />
+            <directionalLight position={[0, lightY, lightZ]} intensity={lightIntensity.directional} />
 
             <animated.group position={[posX, posY, posZ]} rotation-x={rotX} rotation-y={rotY} scale={scale}>
                 <Helmet onTransformClick={handleTransformClick} />

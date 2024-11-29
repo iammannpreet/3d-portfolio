@@ -2,61 +2,81 @@ import React, { useState } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { HelmetCanvas } from './HelmetCanvas';
 import { Reflector, Environment } from '@react-three/drei';
+import KnowMeButton from '../../components/KnowMeButton';
+import TextCarousel from '../../components/TextCarousel';
 
 function Welcome() {
-  const [isNightMode, setIsNightMode] = useState(false); // State to toggle between day/night modes
+  const [isNightMode, setIsNightMode] = useState(false);
+  const items = [
+    'NextJS',
+    'ReactJS',
+    'TailwindCSS',
+    'NodeJS',
+    'MongoDB',
+    'SQL',
+    'ReactThreeFiber',
+    'JavaScript',
+    'ExpressJS',
+    'GraphQL',
+    'REST APIs',
+    'HTML5',
+    'CSS3',
+    'TypeScript',
+    'Three.js',
+    'Redux',
+    'Git',
+    'Firebase',
+    'Docker',
+    'PostgreSQL',
+    'Supabase',
+    'Vite',
+  ];
+
 
   const toggleEnvironment = () => {
     setIsNightMode((prevMode) => !prevMode);
   };
 
   return (
-    <div style={{ height: '100vh', width: '100vw' }}>
+    <div style={{ height: '100vh', width: '100vw', position: 'relative' }}>
       {/* Toggle Button */}
-      <button
-        onClick={toggleEnvironment}
-        style={{
-          position: 'absolute',
-          top: '20px',
-          right: '20px',
-          padding: '10px 20px',
-          background: 'black',
-          color: 'white',
-          border: 'none',
-          borderRadius: '5px',
-          cursor: 'pointer',
-          zIndex: 1000, // Ensure the button appears above the canvas
-        }}
-      >
-        {isNightMode ? 'Switch to Day Mode' : 'Switch to Night Mode'}
-      </button>
+      <div style={{ position: 'absolute', top: '80px', left: '20px', zIndex: 1000 }}>
+        <KnowMeButton
+          className="min-w-[5rem]"
+          onClick={toggleEnvironment}
+        >
+          {isNightMode ? 'Light' : 'Dark'}
+        </KnowMeButton>
 
-      <Canvas camera={{ position: [0, 3, 8], fov: 50 }}>
-        {/* Environment */}
+      </div>
+
+      {/* Rotating 3D Text Carousel */}
+      <div style={{ position: 'absolute', zIndex: 10 }}>
+        <TextCarousel items={items} />
+      </div>
+
+      {/* Canvas */}
+      <Canvas camera={{ position: [0, 1, 8], fov: 50 }}>
         <Environment
           files={
             isNightMode
-              ? 'https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/2k/moonless_golf_2k.hdr' // Night mode HDRI
-              : 'https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/2k/evening_road_01_puresky_2k.hdr' // Day mode HDRI
+              ? 'https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/moonless_golf_1k.hdr'
+              : 'https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/evening_road_01_puresky_1k.hdr'
           }
-          background // Sets the HDRI as the scene background
+          background={!isNightMode}
         />
-
-        {/* Helmet Canvas */}
         <HelmetCanvas />
-
-        {/* Reflective Floor */}
         <Reflector
-          resolution={1440}
-          args={[5, 8]} // Plane dimensions
-          mirror={isNightMode ? 1 : 0.5} // Night: subtle reflection, Day: stronger reflection
-          mixBlur={isNightMode ? 1 : 0.2} // Night: more blur, Day: less blur
-          mixStrength={isNightMode ? 1.5 : 2.5} // Night: softer reflection, Day: sharper reflection
-          depthScale={isNightMode ? 3.0 : 5.5} // Night: reduced depth, Day: increased depth
-          minDepthThreshold={isNightMode ? 0.5 : 0.75} // Night: lower threshold, Day: higher threshold
-          maxDepthThreshold={1.0} // Upper depth threshold
-          rotation={[-Math.PI / 2.1, 0, 0]} // Rotate to face upwards
-          position={[0, -1.5, 3]} // Place below the model
+          resolution={1024}
+          args={[5, 8]}
+          mirror={isNightMode ? 0.7 : 0.4}
+          mixBlur={isNightMode ? 1 : 0.2}
+          mixStrength={isNightMode ? 1.2 : 2.2}
+          depthScale={isNightMode ? 2.5 : 4.5}
+          minDepthThreshold={isNightMode ? 0.5 : 0.7}
+          maxDepthThreshold={1.0}
+          rotation={[-Math.PI / 2.1, 0, 0]}
+          position={[0, -1.5, 3]}
         >
           {(Material, props) => (
             <Material {...props} color="white" metalness={1} roughness={0} />
