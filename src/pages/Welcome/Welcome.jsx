@@ -23,6 +23,7 @@ function Welcome() {
     'GraphQL',
     'REST APIs',
     'HTML5',
+    'VSCODE',
     'CSS3',
     'TypeScript',
     'Three.js',
