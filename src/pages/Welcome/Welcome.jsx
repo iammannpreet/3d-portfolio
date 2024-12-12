@@ -100,7 +100,7 @@ function Welcome() {
 
       // Shooting stars effect
       const tl = gsap.timeline({ repeat: -1 });
-      tl.to({}, { duration: 2 }); // Delay before shooting stars
+      tl.to({}, { duration: 2 });
       tl.add(() => {
         const star = new Star();
         star.size = 1;
