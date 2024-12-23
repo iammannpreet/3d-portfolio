@@ -9,6 +9,10 @@ A dynamic and visually stunning 3D portfolio built using **React Three Fiber**, 
 - **Interactive Night Mode**: Switch between day and night themes with dynamic environment lighting and a starry sky animation.
 - **Text Carousel**: An animated carousel displaying technical skills and tools.
 - **Reflective Surface**: A realistic ground reflection using the `Reflector` component from `@react-three/drei`.
+
+https://github.com/user-attachments/assets/f802bf03-686c-46e4-9a78-50d4df0d7a1c
+
+
 - **GSAP Animations**: Smooth transitions and shooting stars effects using GSAP for enhanced user experience.
 - **Responsive Design**: Fully responsive layout to ensure compatibility across devices.
 
@@ -55,10 +59,6 @@ yarn dev
 Open your browser and navigate to `http://localhost:3000`.
 
 ### Build for Production
-
-
-https://github.com/user-attachments/assets/ec4b4870-3bfe-46d6-93a4-285f210528cf
-
 
 To create a production build:
 ```bash
