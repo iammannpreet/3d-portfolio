@@ -1,0 +1,148 @@
+@import 'tailwindcss';
+
+/*
+ * Design tokens. Tailwind 4 turns these into utilities:
+ *   colours  bg-asphalt, text-ink, text-ink-dim, border-line, text-ember, text-ion ...
+ *   fonts    font-display (Bruno Ace), font-sans (Reem Kufi), font-mono (JetBrains Mono)
+ */
+@theme {
+  --font-display: 'Bruno Ace', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Reem Kufi Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  --color-asphalt: #07080c;
+  --color-asphalt-800: #0d0f15;
+  --color-asphalt-700: #151821;
+  --color-asphalt-600: #1e222d;
+  --color-ink: #eceef3;
+  --color-ink-dim: #a9b0be;
+  --color-ink-faint: #737b8c;
+  --color-ember: #fe5e0e;
+  --color-ember-soft: #ff8a4c;
+  --color-ion: #38e1ff;
+  --color-line: rgb(255 255 255 / 0.12);
+}
+
+@layer base {
+  html {
+    background: var(--color-asphalt);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100svh;
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background: var(--color-ember);
+    color: #fff;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-ion);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+/* ---- Layers ---------------------------------------------------------------------------- */
+
+.scene-host {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  width: 100vw;
+  /* The large viewport height: the canvas must not resize when a phone's URL bar slides away. */
+  height: 100lvh;
+  pointer-events: none;
+}
+
+/* Static backdrop when WebGL is unavailable or the scene failed. */
+.scene-host[data-off] {
+  background:
+    radial-gradient(120% 80% at 70% 20%, rgb(254 94 14 / 0.16), transparent 60%),
+    radial-gradient(90% 70% at 20% 90%, rgb(56 225 255 / 0.1), transparent 60%),
+    var(--color-asphalt);
+}
+
+main {
+  position: relative;
+  z-index: 10;
+}
+
+.hud {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  /* The HUD never blocks the page. Interactive HUD parts opt back in with pointer-events-auto. */
+  pointer-events: none;
+}
+
+/* ---- Chapters -------------------------------------------------------------------------- */
+
+.chapter {
+  position: relative;
+  height: calc(var(--len-m) * 1svh);
+}
+
+@media (min-width: 768px) {
+  .chapter {
+    height: calc(var(--len-d) * 1svh);
+  }
+}
+
+.chapter-stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: clip;
+}
+
+/* ---- Reveal windows (see <Reveal>) ----------------------------------------------------- */
+
+[data-reveal] {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(18px);
+  transition:
+    opacity 0.4s ease,
+    transform 0.55s cubic-bezier(0.2, 0.7, 0.2, 1),
+    visibility 0s linear 0.4s;
+}
+
+[data-reveal][data-on] {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition-delay: 0s;
+}
+
+html[data-motion='reduced'] [data-reveal] {
+  transform: none;
+  transition-duration: 0.01s;
+}
+
+/* ---- Accessibility --------------------------------------------------------------------- */
+
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 100;
+  padding: 0.6rem 1rem;
+  border-radius: 0.5rem;
+  background: var(--color-ink);
+  color: var(--color-asphalt);
+  font-weight: 600;
+  transform: translateY(-200%);
+}
+
+.skip-link:focus-visible {
+  transform: none;
+}
