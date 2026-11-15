@@ -7,6 +7,7 @@ import { SceneHost } from './scene/SceneHost'
 import { initScroll } from './scroll/engine'
 import { Contact } from './sections/Contact'
 import { Crew } from './sections/Crew'
+import { Footer } from './sections/Footer'
 import { Garage } from './sections/Garage'
 import { Hero } from './sections/Hero'
 import { Machine } from './sections/Machine'
@@ -44,6 +45,7 @@ export default function App() {
         <Crew />
         <Contact />
       </main>
+      <Footer />
       <Loader />
     </>
   )

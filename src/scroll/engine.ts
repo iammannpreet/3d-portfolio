@@ -258,14 +258,15 @@ export function initScroll(): () => void {
  */
 export function scrollToChapter(
   id: ChapterId,
-  options: { at?: number; immediate?: boolean } = {},
+  options: { at?: number; immediate?: boolean; duration?: number } = {},
 ): void {
   const chapter = scroll.chapters.find((c) => c.id === id)
   if (!chapter) return
   const y = Math.round(chapter.top + clamp01(options.at ?? 0) * chapter.travel)
   if (lenis && !options.immediate) {
     const distance = Math.abs(y - scroll.y)
-    lenis.scrollTo(y, { duration: clamp(distance / 2600, 0.9, 2.8) })
+    // `duration` (seconds) lets a caller play the scroll as a deliberate, slower move.
+    lenis.scrollTo(y, { duration: options.duration ?? clamp(distance / 2600, 0.9, 2.8) })
   } else {
     window.scrollTo({ top: y, behavior: 'auto' })
   }

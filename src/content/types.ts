@@ -109,6 +109,10 @@ export interface Credit {
 
 export interface SiteContent {
   meta: { siteUrl: string; title: string; description: string }
+  /** Hero call-to-action label and the line under the scroll hint. */
+  hero: { cta: string; scrollHint: string }
+  /** The closing chapter's heading and the sentence under it. */
+  contact: { heading: string; blurb: string }
   profile: Profile
   socials: Social[]
   /** Skill names orbiting the helmet. Plain ASCII only: they are rendered with a subset font. */

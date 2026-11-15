@@ -4,7 +4,7 @@ import type { ChapterScript } from '../types'
 /** 5: the bike dims and drops back so the testimonials carry the screen. */
 export const pitCrew: ChapterScript = {
   chapter: 'pit-crew',
-  length: { desktop: 160, mobile: 180 },
+  length: { desktop: 280, mobile: 300 },
   frames: [
     {
       at: 0,

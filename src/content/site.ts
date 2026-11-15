@@ -15,6 +15,16 @@ export const site: SiteContent = {
       'Backend software engineer building event-driven systems with Node.js, TypeScript and Rails. Scroll through the stack, the experience and the projects.',
   },
 
+  hero: {
+    cta: 'Know me better',
+    scrollHint: 'Scroll to ride',
+  },
+
+  contact: {
+    heading: 'Kickstand down.',
+    blurb: 'Want to collaborate, or just talk shop about queues and motorcycles? Email is the fastest way to reach me.',
+  },
+
   profile: {
     name: 'Manpreet Singh',
     shortName: 'Mann',

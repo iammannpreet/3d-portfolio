@@ -1,4 +1,7 @@
 @import 'tailwindcss';
+@import './ui.css';
+@import './sections.css';
+@import './hud.css';
 
 /*
  * Design tokens. Tailwind 4 turns these into utilities:
@@ -16,7 +19,7 @@
   --color-asphalt-600: #1e222d;
   --color-ink: #eceef3;
   --color-ink-dim: #a9b0be;
-  --color-ink-faint: #737b8c;
+  --color-ink-faint: #838b9c;
   --color-ember: #fe5e0e;
   --color-ember-soft: #ff8a4c;
   --color-ion: #38e1ff;
@@ -82,6 +85,42 @@ main {
   z-index: 20;
   /* The HUD never blocks the page. Interactive HUD parts opt back in with pointer-events-auto. */
   pointer-events: none;
+}
+
+/*
+ * Where the HUD lives, so page content can keep clear of it.
+ *   top     the top bar (brand, résumé link)
+ *   right   the gear indicator rail
+ *   bottom  the speedo (bottom-left) and the motion toggle (bottom-right)
+ * Sections pad their stage with these; HUD components size themselves to fit inside them.
+ */
+:root {
+  --hud-top: 3.5rem;
+  --hud-right: 0.75rem;
+  --hud-bottom: 4.25rem;
+  --hud-left: 0.75rem;
+  --gutter: 1.1rem;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --hud-top: 4.25rem;
+    --hud-right: 5.25rem;
+    --hud-bottom: 6.75rem;
+    --hud-left: 1.5rem;
+    --gutter: clamp(1.5rem, 4vw, 4.5rem);
+  }
+}
+
+/* Pads a chapter stage so its content never sits under the HUD. */
+.stage-safe {
+  padding: calc(var(--hud-top) + 0.75rem) calc(var(--hud-right) + var(--gutter))
+    calc(var(--hud-bottom) + 0.5rem + env(safe-area-inset-bottom)) var(--gutter);
+}
+
+footer.site-footer {
+  position: relative;
+  z-index: 10;
 }
 
 /* ---- Chapters -------------------------------------------------------------------------- */
