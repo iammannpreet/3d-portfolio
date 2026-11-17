@@ -35,7 +35,7 @@ export default function App() {
       <SceneHost />
       <VisorOverlay />
       <Hud />
-      <main id="content">
+      <main id="content" tabIndex={-1}>
         <Hero />
         <Visor />
         <Machine />

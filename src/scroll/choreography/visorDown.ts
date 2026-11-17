@@ -26,12 +26,18 @@ export const visorDown: ChapterScript = {
       label: 'centre the helmet',
       state: {
         camAzimuth: 0.2,
-        camDistance: 1.05,
+        camDistance: 0.92,
         camPolar: 1.4,
         camShiftX: 0,
-        ringOpacity: 0.4,
+        ringOpacity: 0.55,
       },
-      portrait: { camDistance: 1.25, camShiftY: 0.08 },
+      portrait: { camDistance: 1.15, camShiftY: 0.08 },
+    },
+    {
+      at: 0.13,
+      ease: 'out',
+      label: 'skill rings fade away',
+      state: { ringOpacity: 0 },
     },
     {
       at: 0.36,

@@ -21,7 +21,7 @@ export const site: SiteContent = {
   },
 
   contact: {
-    heading: 'Kickstand down.',
+    heading: 'Get in touch',
     blurb: 'Want to collaborate, or just talk shop about queues and motorcycles? Email is the fastest way to reach me.',
   },
 

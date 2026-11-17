@@ -66,16 +66,16 @@ interface RevealProps extends HTMLAttributes<HTMLElement> {
   /** Chapter progress (0..1) after which it disappears. */
   to?: number
   /** Element to render. */
-  as?: 'div' | 'article' | 'aside' | 'li' | 'section' | 'p' | 'ul' | 'ol' | 'header' | 'footer'
+  as?: 'div' | 'article' | 'aside' | 'li' | 'section' | 'p' | 'ul' | 'ol' | 'header' | 'footer' | 'figure'
   /** When set, showing this element makes that hotspot the active one (leader line, marker). */
   hotspot?: HotspotId
   children?: ReactNode
 }
 
 /**
- * Shows its children only while the chapter's progress is inside from..to.
- * Visible elements carry `data-on` (style the transition in CSS); hidden ones are `inert`, so
- * they are skipped by the keyboard and screen readers.
+ * Shows its children only while the chapter's progress is inside from..to. Visible elements carry
+ * `data-on`; the transition is styled in CSS. Hidden content stays readable by screen readers, and
+ * focusing into it scrolls the page to where it is shown.
  */
 export function Reveal({ from = 0, to = 1, as = 'div', hotspot, children, ...rest }: RevealProps) {
   const chapter = useChapterId()

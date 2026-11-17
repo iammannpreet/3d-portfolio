@@ -43,6 +43,17 @@ interface RevealEntry {
   on: boolean | null
 }
 
+export interface ScrollToOptions {
+  /** 0..1 through the chapter's sticky travel. Default 0, the moment its stage sticks. */
+  at?: number
+  /** Jump without animating. */
+  immediate?: boolean
+  /** Seconds. Defaults to a duration based on the distance. */
+  duration?: number
+  /** Easing for the scroll animation, 0..1 in and out. */
+  easing?: (t: number) => number
+}
+
 let lenis: Lenis | null = null
 let frames: ResolvedFrame[] = []
 let lastSegment = Number.NaN
@@ -64,9 +75,10 @@ export function onTick(cb: TickListener): () => void {
 }
 
 /**
- * Shows `el` while its chapter's progress is inside from..to. Shown elements get `data-on`;
- * hidden ones are `inert`. If `hotspot` is given, showing the element also makes that hotspot the
- * active one.
+ * Marks `el` with `data-on` while its chapter's progress is inside from..to. Hiding is visual
+ * only: the content stays available to screen readers, and when keyboard focus moves into a
+ * hidden element the page scrolls to where it is shown. If `hotspot` is given, showing the
+ * element also makes that hotspot the active one.
  */
 export function registerReveal(
   el: HTMLElement,
@@ -78,8 +90,14 @@ export function registerReveal(
   const entry: RevealEntry = { el, chapter, from, to, hotspot, on: null }
   reveals.add(entry)
   updateReveal(entry)
+  const onFocus = () => {
+    if (entry.on) return
+    scrollToChapter(chapter, { at: (Math.max(0, from) + Math.min(1, to)) / 2, immediate: true })
+  }
+  el.addEventListener('focusin', onFocus)
   return () => {
     reveals.delete(entry)
+    el.removeEventListener('focusin', onFocus)
     if (entry.hotspot && bridge.activeHotspot === entry.hotspot) setActiveHotspot(null)
   }
 }
@@ -102,7 +120,6 @@ function updateReveal(entry: RevealEntry): void {
   if (on === entry.on) return
   entry.on = on
   entry.el.toggleAttribute('data-on', on)
-  entry.el.inert = !on
   if (entry.hotspot) {
     if (on) setActiveHotspot(entry.hotspot)
     else if (bridge.activeHotspot === entry.hotspot) setActiveHotspot(null)
@@ -215,7 +232,8 @@ function applyMotionPreference(): void {
     lerp: 0.11,
     smoothWheel: true,
     autoRaf: false,
-    anchors: true,
+    // In-page links are handled by scrollToChapter, which knows where each chapter sticks.
+    anchors: false,
   })
 }
 
@@ -256,17 +274,21 @@ export function initScroll(): () => void {
  * Scrolls to a chapter. `at` is 0..1 through the chapter's sticky travel (default 0, the moment
  * its stage sticks). Long jumps play as a quick fast-forward unless motion is reduced.
  */
-export function scrollToChapter(
-  id: ChapterId,
-  options: { at?: number; immediate?: boolean; duration?: number } = {},
-): void {
+export function scrollToChapter(id: ChapterId, options: ScrollToOptions = {}): void {
   const chapter = scroll.chapters.find((c) => c.id === id)
   if (!chapter) return
   const y = Math.round(chapter.top + clamp01(options.at ?? 0) * chapter.travel)
-  if (lenis && !options.immediate) {
+  if (lenis) {
+    if (options.immediate) {
+      lenis.scrollTo(y, { immediate: true, force: true })
+      return
+    }
     const distance = Math.abs(y - scroll.y)
-    // `duration` (seconds) lets a caller play the scroll as a deliberate, slower move.
-    lenis.scrollTo(y, { duration: options.duration ?? clamp(distance / 2600, 0.9, 2.8) })
+    lenis.scrollTo(y, {
+      duration: options.duration ?? clamp(distance / 2600, 0.9, 2.8),
+      easing: options.easing,
+      force: true,
+    })
   } else {
     window.scrollTo({ top: y, behavior: 'auto' })
   }

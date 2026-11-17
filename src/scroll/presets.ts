@@ -1,4 +1,8 @@
+import { site } from '../content/site'
 import type { RigPatch, RigState } from './types'
+
+/** Where the bike stops after the road: just past the last milestone gate. */
+export const PARKED_GATE = site.milestones.length
 
 /**
  * The hero pose: the helmet alone on the mirror floor at dusk.

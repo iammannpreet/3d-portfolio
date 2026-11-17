@@ -36,9 +36,9 @@ const POSES: Record<HotspotId, Pose> = {
   engine: { azimuth: 0.15, polar: 1.5, distance: 2.5, target: [0.05, 0.45, 0] },
   drivetrain: { azimuth: -0.75, polar: 1.48, distance: 2.4, target: [-0.55, 0.35, 0] },
   frame: { azimuth: -2.35, polar: 1.3, distance: 3.0, target: [0, 0.55, 0] },
-  tank: { azimuth: -3.5, polar: 1.05, distance: 2.3, target: [0.25, 0.8, 0] },
-  cockpit: { azimuth: -4.55, polar: 1.0, distance: 2.0, target: [0.55, 0.9, 0] },
-  brakes: { azimuth: -5.6, polar: 1.52, distance: 2.2, target: [0.75, 0.32, 0] },
+  tank: { azimuth: -3.3, polar: 0.92, distance: 2.4, target: [0.3, 0.86, 0] },
+  cockpit: { azimuth: -4.25, polar: 1.18, distance: 2.1, target: [0.5, 0.82, 0] },
+  brakes: { azimuth: -5.55, polar: 1.5, distance: 2.1, target: [0.7, 0.36, 0] },
 }
 
 /** How far the camera keeps drifting while parked, so a stop never looks frozen. */
@@ -81,7 +81,7 @@ export const machine: ChapterScript = {
         camDistance: 4.1,
         camShiftX: -0.17,
       },
-      portrait: { camShiftY: 0.17 },
+      portrait: { camShiftY: 0.22 },
     },
     ...stopFrames,
     {

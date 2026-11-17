@@ -1,7 +1,6 @@
 import { useRigVars } from '../scroll/hooks'
 import { GearNav } from './GearNav'
 import { HotspotLines } from './HotspotLines'
-import { MotionToggle } from './MotionToggle'
 import { Speedo } from './Speedo'
 import { TopBar } from './TopBar'
 import { TripBar } from './TripBar'
@@ -14,12 +13,11 @@ export function Hud() {
   const ref = useRigVars<HTMLDivElement>()
   return (
     <div ref={ref} className="hud">
-      <TopBar />
+      <HotspotLines />
       <TripBar />
+      <TopBar />
       <GearNav />
       <Speedo />
-      <MotionToggle />
-      <HotspotLines />
     </div>
   )
 }

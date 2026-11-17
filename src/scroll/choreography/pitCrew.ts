@@ -1,4 +1,4 @@
-import { ON_BIKE } from '../presets'
+import { ON_BIKE, PARKED_GATE } from '../presets'
 import type { ChapterScript } from '../types'
 
 /** 5: the bike dims and drops back so the testimonials carry the screen. */
@@ -14,8 +14,8 @@ export const pitCrew: ChapterScript = {
         mood: 1,
         stars: 1,
         garage: 0.5,
-        gate: 9,
-        exposure: 0.4,
+        gate: PARKED_GATE,
+        exposure: 0.58,
         bloom: 0.5,
         camAzimuth: -0.4,
         camPolar: 1.2,

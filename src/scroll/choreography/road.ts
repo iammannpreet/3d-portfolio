@@ -67,7 +67,7 @@ export function road(milestoneCount: number): ChapterScript {
           camDistance: 4.4,
           camShiftX: -0.12,
         },
-        portrait: { camShiftY: 0.17 },
+        portrait: { camShiftY: 0.23 },
       },
       {
         at: 0.07,
