@@ -50,12 +50,16 @@ export function Bike() {
   useEffect(() => {
     if (!model) return
     const materials = materialsOf(model) as MeshStandardMaterial[]
+    const wheels = ['wheel_front', 'wheel_rear']
+      .map((name) => model.getObjectByName(name))
+      .filter((wheel): wheel is Object3D => Boolean(wheel))
+    if (import.meta.env.DEV && wheels.length !== 2) {
+      console.warn(`Bike: expected 2 wheel nodes, found ${wheels.length}. Run npm run optimize:models.`)
+    }
     parts.current = {
       materials,
       baseEmissive: materials.map((m) => m.emissiveIntensity),
-      wheels: ['wheel_front', 'wheel_rear']
-        .map((name) => model.getObjectByName(name))
-        .filter((wheel): wheel is Object3D => Boolean(wheel)),
+      wheels,
     }
   }, [model])
 

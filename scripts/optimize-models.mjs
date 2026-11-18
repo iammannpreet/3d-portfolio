@@ -18,6 +18,7 @@ import { ALL_EXTENSIONS } from '@gltf-transform/extensions'
 import { dedup, meshopt, prune, textureCompress } from '@gltf-transform/functions'
 import { MeshoptDecoder, MeshoptEncoder } from 'meshoptimizer'
 import sharp from 'sharp'
+import { splitWheels } from './lib/split-wheels.mjs'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const SRC = path.join(root, 'models-src')
@@ -41,7 +42,7 @@ const JOBS = [
 
 /** Transforms that must see the original, uncompressed geometry go here, keyed by source file. */
 const EXTRA_TRANSFORMS = {
-  // 'bike.glb': [splitWheels()],
+  'bike.glb': [splitWheels({ log: (message) => console.log(`  split-wheels: ${message}`) })],
 }
 
 function describe(document) {

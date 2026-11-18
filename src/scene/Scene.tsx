@@ -1,7 +1,8 @@
 import { PerformanceMonitor } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
+import { useEffect, useState } from 'react'
 import { setTier, useTier } from '../lib/quality'
-import { setSceneStatus } from '../scroll/store'
+import { setSceneStatus, useModelReady } from '../scroll/store'
 import { Atmosphere } from './Atmosphere'
 import { Bike } from './Bike'
 import { Effects } from './Effects'
@@ -11,6 +12,29 @@ import { Lighting } from './Lighting'
 import { Rig } from './Rig'
 import { Road } from './Road'
 import { WorldClock } from './world'
+
+/** Seconds to wait after both models are in before judging performance. */
+const SETTLE_SECONDS = 4
+
+/**
+ * Drops to the low tier for the rest of the visit if frames stay slow for several seconds.
+ * It only starts once both models are loaded and settled: downloading, decoding and compiling
+ * them stalls a few frames on any machine, and that must not count against it.
+ */
+function QualityMonitor() {
+  const helmet = useModelReady('helmet')
+  const bike = useModelReady('bike')
+  const [watching, setWatching] = useState(false)
+
+  useEffect(() => {
+    if (!helmet || !bike) return
+    const timer = window.setTimeout(() => setWatching(true), SETTLE_SECONDS * 1000)
+    return () => window.clearTimeout(timer)
+  }, [helmet, bike])
+
+  if (!watching) return null
+  return <PerformanceMonitor ms={500} iterations={8} threshold={0.8} onDecline={() => setTier('low')} />
+}
 
 /**
  * The WebGL scene behind the page. Frame order (lower runs first):
@@ -32,18 +56,16 @@ export default function Scene() {
         })
       }}
     >
-      {/* If frame times stay poor, drop to the low tier for the rest of the visit. */}
-      <PerformanceMonitor flipflops={2} onDecline={() => setTier('low')} onFallback={() => setTier('low')}>
-        <Rig />
-        <WorldClock />
-        <Atmosphere />
-        <Lighting />
-        <Floor />
-        <Road />
-        <Helmet />
-        <Bike />
-        <Effects />
-      </PerformanceMonitor>
+      <QualityMonitor />
+      <Rig />
+      <WorldClock />
+      <Atmosphere />
+      <Lighting />
+      <Floor />
+      <Road />
+      <Helmet />
+      <Bike />
+      <Effects />
     </Canvas>
   )
 }

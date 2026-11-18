@@ -330,9 +330,11 @@ html[data-motion='full'] .hero__hint svg {
   gap: 1rem;
 }
 
+/* Cards slide inside this window and are clipped at its edges, clear of the HUD rail. */
 .garage__window {
   container-type: inline-size;
-  overflow: visible;
+  overflow: clip;
+  overflow-clip-margin: 0.5rem;
 }
 
 .garage__strip {

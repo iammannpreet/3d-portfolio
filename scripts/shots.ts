@@ -12,16 +12,6 @@ import { parseArgs } from 'node:util'
 import { chromium, type Page } from '@playwright/test'
 import sharp from 'sharp'
 
-declare global {
-  interface Window {
-    __ride?: {
-      bridge: { ready: { helmet: boolean; bike: boolean } }
-      scroll: { chapters: unknown[] }
-      chapterScrollY(id: string, at?: number): number | null
-    }
-  }
-}
-
 interface Stop {
   chapter: string
   at: number

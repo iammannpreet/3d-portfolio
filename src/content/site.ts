@@ -1,3 +1,8 @@
+import profilePhoto from '../assets/profile.webp'
+import activecircleImage from '../assets/projects/activecircle.webp'
+import bellImage from '../assets/projects/bell-hackathon.webp'
+import braincoinsImage from '../assets/projects/braincoins.webp'
+import ecommerceImage from '../assets/projects/ecommerce-build.webp'
 import type { SiteContent } from './types'
 
 /**
@@ -39,7 +44,7 @@ export const site: SiteContent = {
     location: null,
     email: 'contact@iammannpreet.com',
     resumeUrl: "https://github.com/iammannpreet/myResume/raw/master/Manpreet's%20Resume.pdf",
-    photo: null,
+    photo: profilePhoto,
     facts: [
       { label: 'Experience', value: '3+ years' },
       { label: 'Focus', value: 'Event-driven backends' },
@@ -246,8 +251,8 @@ export const site: SiteContent = {
       role: 'Lead developer',
       year: '2024',
       tags: ['React', 'Tailwind CSS', 'Node.js', 'Express', 'MongoDB', 'Mapbox', 'JWT'],
-      image: null,
-      imageAlt: 'ActiveCircle activity listings and map',
+      image: activecircleImage,
+      imageAlt: 'ActiveCircle landing page: "Stay active. Stay connected. Explore the Circle."',
       links: [
         { label: 'Live', href: 'https://deluxe-banoffee-13d115.netlify.app/' },
         { label: 'Code', href: 'https://github.com/iammannpreet/ActiveCircle' },
@@ -257,11 +262,12 @@ export const site: SiteContent = {
     {
       id: 'bell-hackathon',
       title: 'Bell Industrial Hackathon',
-      blurb: 'Team build for an industry hackathon with Bell.',
+      blurb:
+        'Bell Connect, built as a team for an industry hackathon: a site for exploring Bell\u2019s events and community initiatives.',
       year: '2024',
       tags: ['React', 'Vite'],
-      image: null,
-      imageAlt: 'Bell Industrial Hackathon project screen',
+      image: bellImage,
+      imageAlt: 'Bell Connect home page with cards for Bell initiatives such as mental health and rural connectivity',
       links: [
         {
           label: 'Code',
@@ -274,11 +280,12 @@ export const site: SiteContent = {
     {
       id: 'braincoins',
       title: 'BrainCoins',
-      blurb: 'Team project; server-side code is linked below.',
+      blurb:
+        'A playful team project: every teammate gets a custom coin, and the app converts between them and charts the top coins.',
       year: '2024',
       tags: ['JavaScript', 'Node.js'],
-      image: null,
-      imageAlt: 'BrainCoins project screen',
+      image: braincoinsImage,
+      imageAlt: 'BrainCoins home page showing a row of gold coins, one named after each teammate',
       links: [{ label: 'Code', href: 'https://github.com/gillnim/braincoin-server' }],
       featured: true,
       needsReview: true,
@@ -286,11 +293,11 @@ export const site: SiteContent = {
     {
       id: 'ecommerce-build',
       title: 'Ecommerce-build',
-      blurb: 'An ecommerce storefront built on Next.js 15.',
+      blurb: 'An ecommerce storefront in Next.js 15 and TypeScript, with product listings and a store admin view.',
       year: '2024',
       tags: ['Next.js 15', 'TypeScript'],
-      image: null,
-      imageAlt: 'Ecommerce-build storefront',
+      image: ecommerceImage,
+      imageAlt: 'Storefront with a Black Friday banner and product grid, beside a product editing panel',
       links: [{ label: 'Code', href: 'https://github.com/iammannpreet/ecommerce-build' }],
       featured: true,
       needsReview: true,
