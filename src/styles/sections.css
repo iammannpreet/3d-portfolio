@@ -201,7 +201,6 @@ html[data-motion='full'] .hero__hint svg {
   margin: 0 0 0.75rem 1rem;
   object-fit: cover;
   border-radius: 2px;
-  filter: grayscale(0.2) contrast(1.05);
 }
 
 .rider__bio p {
