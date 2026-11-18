@@ -1,0 +1,186 @@
+@import 'tailwindcss';
+@import './ui.css';
+@import './sections.css';
+@import './hud.css';
+
+/*
+ * Design tokens. Tailwind 4 turns these into utilities:
+ *   colours  bg-asphalt, text-ink, text-ink-dim, border-line, text-ember, text-ion ...
+ *   fonts    font-display (Bruno Ace), font-sans (Reem Kufi), font-mono (JetBrains Mono)
+ */
+@theme {
+  --font-display: 'Bruno Ace', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Reem Kufi Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  --color-asphalt: #07080c;
+  --color-asphalt-800: #0d0f15;
+  --color-asphalt-700: #151821;
+  --color-asphalt-600: #1e222d;
+  --color-ink: #eceef3;
+  --color-ink-dim: #a9b0be;
+  --color-ink-faint: #838b9c;
+  --color-ember: #fe5e0e;
+  --color-ember-soft: #ff8a4c;
+  --color-ion: #38e1ff;
+  --color-line: rgb(255 255 255 / 0.12);
+}
+
+@layer base {
+  html {
+    background: var(--color-asphalt);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100svh;
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background: var(--color-ember);
+    color: #fff;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-ion);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+/* ---- Layers ---------------------------------------------------------------------------- */
+
+.scene-host {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  width: 100vw;
+  /* The large viewport height: the canvas must not resize when a phone's URL bar slides away. */
+  height: 100lvh;
+  pointer-events: none;
+}
+
+/* Static backdrop when WebGL is unavailable or the scene failed. */
+.scene-host[data-off] {
+  background:
+    radial-gradient(120% 80% at 70% 20%, rgb(254 94 14 / 0.16), transparent 60%),
+    radial-gradient(90% 70% at 20% 90%, rgb(56 225 255 / 0.1), transparent 60%),
+    var(--color-asphalt);
+}
+
+main {
+  position: relative;
+  z-index: 10;
+}
+
+.hud {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  /* The HUD never blocks the page. Interactive HUD parts opt back in with pointer-events-auto. */
+  pointer-events: none;
+}
+
+/*
+ * Where the HUD lives, so page content can keep clear of it.
+ *   top     the top bar (brand, résumé link)
+ *   right   the gear indicator rail
+ *   bottom  the speedo (bottom-left) and the motion toggle (bottom-right)
+ * Sections pad their stage with these; HUD components size themselves to fit inside them.
+ */
+:root {
+  --hud-top: 3.5rem;
+  --hud-right: 0.75rem;
+  --hud-bottom: 4.25rem;
+  --hud-left: 0.75rem;
+  --gutter: 1.1rem;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --hud-top: 4.25rem;
+    --hud-right: 5.25rem;
+    --hud-bottom: 6.75rem;
+    --hud-left: 1.5rem;
+    --gutter: clamp(1.5rem, 4vw, 4.5rem);
+  }
+}
+
+/* Pads a chapter stage so its content never sits under the HUD. */
+.stage-safe {
+  padding: calc(var(--hud-top) + 0.75rem) calc(var(--hud-right) + var(--gutter))
+    calc(var(--hud-bottom) + 0.5rem + env(safe-area-inset-bottom)) var(--gutter);
+}
+
+footer.site-footer {
+  position: relative;
+  z-index: 10;
+}
+
+/* ---- Chapters -------------------------------------------------------------------------- */
+
+.chapter {
+  position: relative;
+  height: calc(var(--len-m) * 1svh);
+}
+
+@media (min-width: 768px) {
+  .chapter {
+    height: calc(var(--len-d) * 1svh);
+  }
+}
+
+.chapter-stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: clip;
+}
+
+/* ---- Reveal windows (see <Reveal>) ----------------------------------------------------- */
+
+/* Hidden reveals stay in the accessibility tree; they are only invisible and click-through. */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(18px);
+  pointer-events: none;
+  transition:
+    opacity 0.4s ease,
+    transform 0.55s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+[data-reveal][data-on] {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+html[data-motion='reduced'] [data-reveal] {
+  transform: none;
+  transition-duration: 0.01s;
+}
+
+/* ---- Accessibility --------------------------------------------------------------------- */
+
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 100;
+  padding: 0.6rem 1rem;
+  border-radius: 0.5rem;
+  background: var(--color-ink);
+  color: var(--color-asphalt);
+  font-weight: 600;
+  transform: translateY(-200%);
+}
+
+.skip-link:focus-visible {
+  transform: none;
+}
